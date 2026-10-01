@@ -1,16 +1,19 @@
 import {Routes, Route} from 'react-router'
-import GamePage from "./Routes/GamePage"
 import HomePage from "./Routes/HomePage"
+import GamePage from "./Routes/GamePage"
+
+
 
 
 function App() {
   
 
+
   return (
     <>
-      <Routes>
-        <Route path="/rooms/:roomId" element={<GamePage/>} />
-        <Route path="/HomePage" element={<HomePage/>} />
+     <Routes>
+       <Route path="/" element={<HomePage />} />
+        <Route path="/room/:roomId" element={<GamePage/>} />
       </Routes>
     </>
   )
