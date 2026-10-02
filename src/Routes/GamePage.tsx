@@ -5,6 +5,7 @@ import { api } from '../services/api';
 import type {GameState} from '../types/GameState'
 import Board from '../Components/Board'
 import type {MoveRequest} from '../types/MoveRequest'
+import {wsUrl} from "../config";
 
 
 
@@ -51,7 +52,7 @@ export default function GamePage() {
     if (!roomId) return;
 
     const client = new Client({
-      brokerURL: 'ws://localhost:8080/ws',
+      brokerURL: wsUrl('/ws'),
       reconnectDelay: 5000, // auto-reconnect after 5s
       debug: str => console.log(str), // remove once it works
     });
