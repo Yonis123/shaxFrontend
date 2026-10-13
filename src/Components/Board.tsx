@@ -4,7 +4,7 @@ import "./Board.css"
 import type {MoveRequest} from "../types/MoveRequest"
 import {useState} from 'react'
 import {useNavigate} from 'react-router'
-import {useEffect} from 'react'
+
 
 
 type BoardProps = {
