@@ -49,7 +49,7 @@ export default function HomePage(){
             <h1>Hello my friend please create or join a game</h1>
             <button onClick={handleCreateGame}>create game</button>
             <span></span>
-            <p>I am working on improving the frontend for people that do not already know Shax to have a with better UI and instructions..... please be patient, but if you know the rules, you are welcome to play!!</p>
+            <p>new and improved UI coming soon</p>
                
         </div>
     </>
