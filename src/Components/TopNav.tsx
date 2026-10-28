@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router';
 
 const NAV_LINKS = [
-  { href: '#about', label: 'About' },
-  { href: '#play-game', label: 'Play Game' },
+  { href: '/#play-game', label: 'Play Game' },
 ];
 
 export const TopNav: React.FC = () => {
@@ -23,13 +23,13 @@ export const TopNav: React.FC = () => {
         {/* Desktop navigation */}
         <nav className="hidden md:flex items-center gap-7 text-xs uppercase tracking-widest font-sans font-medium text-[#57534E]">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
+              to={link.href}
               className="hover:text-[#1C1917] transition-colors whitespace-nowrap shrink-0"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -49,14 +49,14 @@ export const TopNav: React.FC = () => {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-[#EAE5DC] bg-[#FAF8F5] px-6 py-4 space-y-3">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
-              href={link.href}
+              to={link.href}
               onClick={() => setMobileMenuOpen(false)}
               className="block text-xs uppercase tracking-widest font-medium text-[#57534E] hover:text-[#1C1917]"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
       )}

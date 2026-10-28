@@ -20,7 +20,7 @@ const boardPoints = insets.flatMap((s) => {
 // A few decorative pieces mid-game, keyed by point index.
 const pieces: Record<number, string> = { 0: "#9E3A14", 9: "#9E3A14", 10: "#9E3A14", 4: "#1C1917", 13: "#1C1917", 22: "#1C1917" }
 
-const ShaxBoard: React.FC = () => (
+export const ShaxBoard: React.FC = () => (
     <svg viewBox="0 0 300 300" className="w-full h-full" aria-hidden="true">
         <g fill="none" stroke="#1C1917" strokeWidth="2" strokeLinecap="round">
             {insets.map((s) => (

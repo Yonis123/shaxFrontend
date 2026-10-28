@@ -1,6 +1,6 @@
 .board-wrapper {
-  padding: 24px;          /* room for spots on the outer edge */
-  width: min(90vw, 500px);
+  padding: clamp(20px, 5vw, 36px);   /* room for spots on the outer edge */
+  background: #EFEAE1;
 }
 
 .board {
@@ -14,9 +14,9 @@
   width: 100%;
   height: 100%;
   fill: none;
-  stroke: #333;
-  stroke-width: 3;
-  vector-effect: non-scaling-stroke;
+  stroke: #1C1917;
+  stroke-width: 2;
+  stroke-linecap: round;
   overflow: visible;
 }
 
@@ -29,30 +29,94 @@
   transform: translate(-50%, -50%); /* center the spot on the point */
 }
 
+/* Points and pieces */
 .spot {
-  width: 36px;
-  height: 36px;
+  --size: clamp(22px, 6vw, 34px);
+  display: block;
+  width: var(--size);
+  height: var(--size);
   border-radius: 50%;
-  border: 2px solid #333;
-  background: #f5f0e6;
   cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
 }
 
+.spot:disabled {
+  cursor: default;
+}
+
+.spot:focus-visible {
+  outline: 2px solid #9E3A14;
+  outline-offset: 3px;
+}
+
+/* An empty point is drawn as a small dot centred in the hit area. */
+.spot.empty {
+  background: radial-gradient(circle, #FBF9F5 0 22%, #1C1917 23% 30%, transparent 31%);
+}
+
+.spot.empty:not(:disabled):hover {
+  background: radial-gradient(circle, rgba(158, 58, 20, 0.25) 0 45%, transparent 46%);
+}
+
+/* Pebbles: an uneven outline (set inline per piece), a random tilt and squash,
+   grainy stone colour, and lighting that stays fixed to the top-left. */
+.pebble {
+  position: relative;
+  overflow: hidden;
+  transform: rotate(var(--rot, 0deg)) scale(var(--sx, 1), 1) scale(var(--lift, 1));
+}
+
+/* Fine grain across the stone */
+.pebble::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Soft highlight and shading, counter-rotated so the light always comes from the top-left */
+.pebble::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  transform: rotate(calc(var(--rot, 0deg) * -1));
+  background:
+    radial-gradient(ellipse 30% 22% at 40% 36%, rgba(255, 255, 255, 0.38), transparent),
+    radial-gradient(ellipse 55% 50% at 62% 68%, rgba(0, 0, 0, 0.4), transparent 75%);
+  pointer-events: none;
+}
+
+/* Drop shadow on the wrapper so it doesn't rotate with the pebble */
+.spot-position:has(.pebble) {
+  filter: drop-shadow(0 2px 2px rgba(28, 25, 23, 0.4));
+}
 
 .p1 {
-    background:rgb(204, 31, 31);
+  background-color: #A3441D;
+  background-image:
+    radial-gradient(circle at 28% 62%, rgba(122, 43, 14, 0.7) 0 6%, transparent 7%),
+    radial-gradient(circle at 70% 30%, rgba(214, 120, 74, 0.6) 0 4%, transparent 5%),
+    radial-gradient(ellipse at 60% 40%, #B85A2E, transparent 60%),
+    radial-gradient(ellipse at 30% 75%, #86330F, transparent 65%);
 }
 
 .p2 {
-    background: rgb(45, 15, 216)
+  background-color: #2B2724;
+  background-image:
+    radial-gradient(circle at 66% 58%, rgba(120, 113, 108, 0.55) 0 4%, transparent 5%),
+    radial-gradient(circle at 34% 34%, rgba(168, 162, 158, 0.4) 0 3%, transparent 4%),
+    radial-gradient(ellipse at 40% 35%, #44403C, transparent 60%),
+    radial-gradient(ellipse at 70% 75%, #0C0A09, transparent 65%);
 }
 
-
-.selected{
-    border: 2px solid gold
+.pebble:not(:disabled):hover {
+  --lift: 1.08;
 }
 
-
-.endHeader{
-    margin-top: 20px;
+.selected {
+  --lift: 1.14;
+  box-shadow: 0 0 0 3px #FBF9F5, 0 0 0 5px #9E3A14;
 }
